@@ -1,0 +1,204 @@
+<configuration>
+    <property name="LOG_HOME" value="logs"/>
+    <!--<springProperty scope="context" name="LOG_HOME" source="apkmarket.logs.app.dir"/>-->
+	<property name="DEFAULT_PATTERN" value="%d %-5level [%X{ctxLogId}][%thread] %logger{5} - %msg%n" />
+	<property name="DIGEST_PATTERN" value="%d %-5level [%X{ctxLogId}][%thread] - %msg%n" />
+	<property name="SERVICE_DIGEST_PATTERN" value="%d %-5level [%X{ctxLogId}][%thread][%X{ctxSrcSys}] - %msg%n" />
+	<property name="STAT_PATTERN" value="%d - %msg%n" />
+	<property name="LEVEL" value="INFO" />
+	<property name="LEVEL_DIGEST" value="${gamemarket.logs.level_digest}" />
+	<property name="CHARSET" value="UTF-8" />
+	
+	<!-- Appenders -->
+	<!-- Appenders : Commons -->
+	<appender name="MISC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/misc.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/misc.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+
+    <appender name="API-STAT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/api-stat.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/api-stat.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${DEFAULT_PATTERN}</pattern>
+            <charset>${CHARSET}</charset>
+        </encoder>
+    </appender>
+
+	<appender name="DEFAULT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/default.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/default.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+           		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/error.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/error.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+	
+
+	<!-- Appenders : Stat -->
+	<appender name="JVM-STAT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/stat/jvm-stat.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/stat/jvm-stat.log.%d{yyyyMMdd}</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>  
+		<encoder>
+			<pattern>${STAT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="OS-STAT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/stat/os-stat.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/stat/os-stat.log.%d{yyyyMMdd}</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>  
+		<encoder>
+			<pattern>${STAT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+
+	<!-- Appenders: App Details -->
+	<appender name="DAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/dal.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/dal.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+	
+	<appender name="BIZ" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/%d{yyyyMMdd}/biz.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+            		<cleanHistoryOnStart>true</cleanHistoryOnStart>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${DEFAULT_PATTERN}</pattern>
+			<charset>${CHARSET}</charset>
+		</encoder>
+	</appender>
+
+	<!-- Loggers -->
+	
+	<!-- Loggers : App Details -->
+	<logger name="com.edwardsbean.apkmarket.dao" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+    <logger name="com.edwardsbean.timo.log" level="${LEVEL}" additivity="false">
+        <appender-ref ref="API-STAT" />
+        <appender-ref ref="ERROR" />
+    </logger>
+
+	<logger name="com.edwardsbean.apkmarket.biz" level="${LEVEL}" additivity="false">
+		<appender-ref ref="BIZ" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<!-- Loggers : Stat -->
+	<logger name="JVM-STAT-LOGGER" level="${LEVEL_DIGEST}" additivity="false">
+		<appender-ref ref="JVM-STAT" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="OS-STAT-LOGGER" level="${LEVEL_DIGEST}" additivity="false">
+		<appender-ref ref="OS-STAT" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<!-- Loggers : Misc -->
+	<logger name="com.alibaba.druid" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+    <logger name="org.springframework.data" level="${LEVEL}" additivity="false">
+        <appender-ref ref="DAL" />
+        <appender-ref ref="ERROR" />
+    </logger>
+
+	<logger name="druid.sql.DataSource" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="druid.sql.Connection" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="druid.sql.Statement" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="druid.sql.ResultSet" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="org.mybatis" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+	
+	<logger name="org.apache.ibatis" level="${LEVEL}" additivity="false">
+		<appender-ref ref="DAL" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<logger name="org.springframework" level="${LEVEL}" additivity="false">
+		<appender-ref ref="MISC" />
+		<appender-ref ref="ERROR" />
+	</logger>
+
+	<!-- Loggers : Root Logger -->
+	<root level="${LEVEL}">
+		<appender-ref ref="ERROR" />
+		<appender-ref ref="DEFAULT" />
+	</root>
+</configuration>
