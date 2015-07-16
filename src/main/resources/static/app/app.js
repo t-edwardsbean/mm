@@ -5,8 +5,7 @@
 var apkmarket = angular.module('apkmarket', [
     'ngRoute',
     'ngResource',
-    'apkmarket.controllers',
-    'apkmarket.services'
+    'apkmarket.controllers'
 ]);
 
 apkmarket.config(['$routeProvider', '$locationProvider',

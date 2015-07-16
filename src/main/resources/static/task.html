@@ -38,8 +38,8 @@
         </h1>
     </div><!-- /.page-header -->
     <div class="page-content">
-        <button class="btn btn-primary" type="button" ng-click="NewTask()">添加</button>
-        <div class="row" ng-show="showTask">
+        <button class="btn btn-primary" type="button" ng-click="NewItem()">添加</button>
+        <div class="row" ng-show="showItem">
             <div class="col-xs-12">
                 <div class="row" style="padding-top: 10px">
                     <div class="col-xs-12">
@@ -58,21 +58,21 @@
                                 </thead>
 
                                 <tbody>
-                                <tr ng-repeat="task in tasks">
-                                    <td>{{task.id}}</td>
-                                    <td>{{task.name}}</td>
-                                    <td>{{task.packageName}}</td>
-                                    <td>{{task.url}}</td>
-                                    <td>{{task.count}}</td>
-                                    <td>{{task.weight}}</td>
+                                <tr ng-repeat="item in items">
+                                    <td>{{item.id}}</td>
+                                    <td>{{item.name}}</td>
+                                    <td>{{item.packageName}}</td>
+                                    <td>{{item.url}}</td>
+                                    <td>{{item.count}}</td>
+                                    <td>{{item.weight}}</td>
                                     <td>
                                         <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 
-                                            <button class="btn btn-xs btn-info" ng-click="EditTask(task)">
+                                            <button class="btn btn-xs btn-info" ng-click="EditItem(item)">
                                                 <i class="icon-edit bigger-120"></i>
                                             </button>
 
-                                            <button class="btn btn-xs btn-danger" ng-click="DeleteTask($index)">
+                                            <button class="btn btn-xs btn-danger" ng-click="DeleteItem($index)">
                                                 <i class="icon-trash bigger-120"></i>
                                             </button>
 
@@ -90,7 +90,7 @@
             </div><!-- /.col -->
         </div><!-- /.row -->
 
-        <div class="panel-group" ng-hide="showTask" id="accordion" role="tablist" aria-multiselectable="true" style="padding-top: 10px">
+        <div class="panel-group" ng-hide="showItem" id="accordion" role="tablist" aria-multiselectable="true" style="padding-top: 10px">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
@@ -111,7 +111,7 @@
                                 <div class="col-sm-4">
                                     <input type="text"
                                            class="col-xs-12" name="topic_name"
-                                           ng-model="editTask.name">
+                                           ng-model="editItem.name">
                                 </div>
                                 <label class="col-sm-1 control-label no-padding-right"
                                 ></label>
@@ -124,7 +124,7 @@
                                 <div class="col-sm-4">
                                     <input type="text"
                                            class="col-xs-12" name="topic_icon"
-                                           ng-model="editTask.packageName">
+                                           ng-model="editItem.packageName">
                                 </div>
                             </div>
                             <div class="space-4"></div>
@@ -135,7 +135,7 @@
                                 <div class="col-sm-4">
                                     <input type="text"
                                            class="col-xs-12"
-                                           ng-model="editTask.url">
+                                           ng-model="editItem.url">
                                 </div>
                             </div>
                             <div class="space-4"></div>
@@ -146,7 +146,7 @@
                                 <div class="col-sm-4">
                                     <input type="text"
                                            class="col-xs-12"
-                                           ng-model="editTask.count">
+                                           ng-model="editItem.count">
                                 </div>
                             </div>
                             <div class="space-4"></div>
@@ -157,13 +157,13 @@
                                 <div class="col-sm-4">
                                     <input type="text"
                                            class="col-xs-12"
-                                           ng-model="editTask.weight">
+                                           ng-model="editItem.weight">
                                 </div>
                             </div>
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <div class="col-sm-3">
-                                    <button class="btn btn-primary" ng-click="SaveTask()"
+                                    <button class="btn btn-primary" ng-click="SaveItem()"
                                             type="button"
                                             style="margin-left:110px;">确定
                                     </button>

@@ -5,30 +5,38 @@
 //将apkmarket.controllers注册到angular
 var controllers = angular.module("apkmarket.controllers", []);
 
-controllers.controller('TaskController', ['$scope', '$route', 'Task', function TaskController($scope, $route, Task) {
+controllers.controller('TaskController', ['$scope', '$route','$resource', function TaskController($scope, $route,$resource) {
     $scope.navigator = '推广管理';
 
-    $scope.editTask = new Task();
-
-    Task.query(function (response) {
-        $scope.tasks = response ? response : [];
+    var Item = $resource("/admin/tasks/:id", {id: '@id'}, {
+        update: {method: 'PUT',params:{id: null}}
     });
 
-    $scope.showTask = true;
+    $scope.editItem = new Item();
 
-    $scope.EditTask = function (task) {
-        $scope.showTask = false;
-        $scope.editTask = task;
+    $scope.showItem = true;
+
+    //查询列表
+    Item.query(function (response) {
+        $scope.items = response ? response : [];
+    });
+
+    //编辑
+    $scope.EditItem = function (item) {
+        $scope.showItem = false;
+        $scope.editItem = item;
     }
-    $scope.SaveTask = function () {
-        if ($scope.editTask.id != null) {
-            $scope.editTask.$update(function () {
+
+    //保存或者更新
+    $scope.SaveItem = function () {
+        if ($scope.editItem.id != null) {
+            $scope.editItem.$update(function () {
                 $route.reload();
                 console.log("更新任务");
             });
         } else {
 
-            $scope.editTask.$save(function () {
+            $scope.editItem.$save(function () {
                 $route.reload();
                 console.log("保存任务");
             })
@@ -36,30 +44,34 @@ controllers.controller('TaskController', ['$scope', '$route', 'Task', function T
 
     }
 
-    $scope.NewTask = function () {
-        $scope.showTask = false;
+    //新增
+    $scope.NewItem = function () {
+        $scope.showItem = false;
     }
 
+    //删除
+    $scope.DeleteItem = function (index) {
+        $scope.items[index].$delete(function (response) {
+            if (response.message == "ok") {
+                $scope.items.splice(index, 1);
+                console.log("删除数据:" + response.message);
+            }
+        });
+    }
+
+    //返回
     $scope.ReloadRoute = function () {
         $route.reload();
     }
 
-    $scope.DeleteTask = function (index) {
-        $scope.tasks[index].$delete(function (response) {
-            if (response.message == "ok") {
-                $scope.tasks.splice(index, 1);
-                console.log("删除数据:" + response.message);
-            }
-        });
-
-    }
-
 }])
 
-controllers.controller('TaskHistoryController', ['$scope', '$route', 'TaskHistory',
-    function TaskHistoryController($scope, $route, TaskHistory) {
+controllers.controller('TaskHistoryController', ['$scope', '$route', '$resource',
+    function TaskHistoryController($scope, $route, $resource) {
 
         $scope.navigator = '推广历史';
+
+        var TaskHistory = $resource("/admin/taskHistories/:id", {id: '@id'});
 
         TaskHistory.query(function (response) {
             $scope.items = response ? response : [];
@@ -73,8 +85,6 @@ controllers.controller('TaskHistoryController', ['$scope', '$route', 'TaskHistor
                 }
             });
         }
-
-
     }]);
 
 
