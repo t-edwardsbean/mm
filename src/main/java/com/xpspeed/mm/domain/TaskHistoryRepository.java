@@ -2,6 +2,8 @@ package com.xpspeed.mm.domain;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
+
 
 /**
  * @author edwardsbean
@@ -9,4 +11,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface TaskHistoryRepository extends MongoRepository<TaskHistory, String> {
     TaskHistory findByTaskIdAndTime(String taskId, String time);
+
+    List<TaskHistory> deleteByTaskId(String taskId);
 }
