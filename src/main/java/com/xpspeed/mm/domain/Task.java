@@ -2,6 +2,7 @@ package com.xpspeed.mm.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 /**
  * @author edwardsbean
@@ -21,9 +22,21 @@ public class Task {
     @ApiModelProperty("推广链接")
     String url;
 
+    @DBRef
+    @ApiModelProperty("推广类型,0或没有表示app,1表示网页")
+    Type type;
+
     Integer count;
 
     Integer weight;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public Integer getCount() {
         return count;

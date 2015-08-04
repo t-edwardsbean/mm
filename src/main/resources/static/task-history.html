@@ -48,6 +48,7 @@
                                 <thead>
                                 <tr>
                                     <th>名称</th>
+                                    <th>类型</th>
                                     <th>日期</th>
                                     <th>推广数量</th>
                                     <th></th>
@@ -57,6 +58,7 @@
                                 <tbody>
                                 <tr ng-repeat="item in items">
                                     <td>{{item.task.name}}</td>
+                                    <td>{{item.task.type.name}}</td>
                                     <td>{{item.time}}</td>
                                     <td>{{item.count}}</td>
                                     <td>

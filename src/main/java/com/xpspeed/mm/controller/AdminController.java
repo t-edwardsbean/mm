@@ -22,6 +22,9 @@ public class AdminController {
     @Autowired
     TaskHistoryRepository taskHistoryRepository;
 
+    @Autowired
+    TypeRepository typeRepository;
+
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     public List<Task> tasks() {
         return taskRepository.findAll();
@@ -55,5 +58,16 @@ public class AdminController {
         taskRepository.delete(id);
         taskHistoryRepository.deleteByTaskId(id);
         return "{\"message\":\"ok\"}";
+    }
+
+    @RequestMapping(value = "/types", method = RequestMethod.POST)
+    public String saveType(@RequestBody Type type) {
+        typeRepository.save(type);
+        return "{\"message\":\"ok\"}";
+    }
+
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public List<Type> getTypes() {
+        return typeRepository.findAll();
     }
 }

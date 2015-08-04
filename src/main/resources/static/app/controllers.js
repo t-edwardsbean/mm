@@ -12,6 +12,12 @@ controllers.controller('TaskController', ['$scope', '$route','$resource', functi
         update: {method: 'PUT',params:{id: null}}
     });
 
+    var Type = $resource("/admin/types/:id", {id: '@id'});
+
+    Type.query(function(response) {
+        $scope.types = response ? response : [];
+    })
+
     $scope.editItem = new Item();
 
     $scope.showItem = true;
@@ -25,6 +31,11 @@ controllers.controller('TaskController', ['$scope', '$route','$resource', functi
     $scope.EditItem = function (item) {
         $scope.showItem = false;
         $scope.editItem = item;
+        var topicType = $scope.types.filter(function (type) {
+            return type.id == $scope.editItem.type.id ? true : false;
+        })[0];
+        //初始化被选中的select option
+        $scope.updateSelectedType = topicType;
     }
 
     //保存或者更新
@@ -63,6 +74,13 @@ controllers.controller('TaskController', ['$scope', '$route','$resource', functi
     $scope.ReloadRoute = function () {
         $route.reload();
     }
+
+    $scope.SelectType = function (updateSelectedType) {
+        $scope.updateSelectedType = updateSelectedType;
+        $scope.editItem.type = updateSelectedType;
+
+    };
+
 
 }])
 
