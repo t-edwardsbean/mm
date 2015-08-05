@@ -9,4 +9,8 @@ import java.util.List;
 public interface TaskService {
 
     public Task getTask(String taskId, List<String> doneIds, List<String> failId);
+
+    public Task getV1Task(String taskId, List<String> doneIds, List<String> failId);
+
+    public List<Task> getAllAppTask();
 }

@@ -12,7 +12,8 @@
             <a href="#">首页</a>
         </li>
         <li class="active">{{navigator}}</li>
-    </ul><!-- .breadcrumb -->
+    </ul>
+    <!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
         <form class="form-search">
@@ -22,7 +23,8 @@
 									<i class="icon-search nav-search-icon"></i>
 								</span>
         </form>
-    </div><!-- #nav-search -->
+    </div>
+    <!-- #nav-search -->
 </div>
 
 <!-- 正式页面内容-->
@@ -36,7 +38,8 @@
                 查看
             </small>
         </h1>
-    </div><!-- /.page-header -->
+    </div>
+    <!-- /.page-header -->
     <div class="page-content">
         <button class="btn btn-primary" type="button" ng-click="NewItem()">添加</button>
         <div class="row" ng-show="showItem">
@@ -50,6 +53,7 @@
                                     <th>id</th>
                                     <th>名称</th>
                                     <th>类型</th>
+                                    <th>图标</th>
                                     <th>包名</th>
                                     <th>推广链接</th>
                                     <th>推广数量</th>
@@ -63,6 +67,12 @@
                                     <td>{{item.id}}</td>
                                     <td>{{item.name}}</td>
                                     <td>{{item.type.name}}</td>
+                                    <td>
+                                        <div ng-hide="item.icon">暂无图标</div>
+                                        <div ng-hide="!item.icon">
+                                            <img src="{{item.icon}}" style="width: 50px;height: 50px;">
+                                        </div>
+                                    </td>
                                     <td>{{item.packageName}}</td>
                                     <td>{{item.url}}</td>
                                     <td>{{item.count}}</td>
@@ -85,14 +95,20 @@
 
                                 </tbody>
                             </table>
-                        </div><!-- /.table-responsive -->
-                    </div><!-- /span -->
-                </div><!-- /row -->
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /span -->
+                </div>
+                <!-- /row -->
 
-            </div><!-- /.col -->
-        </div><!-- /.row -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
 
-        <div class="panel-group" ng-hide="showItem" id="accordion" role="tablist" aria-multiselectable="true" style="padding-top: 10px">
+        <div class="panel-group" ng-hide="showItem" id="accordion" role="tablist" aria-multiselectable="true"
+             style="padding-top: 10px">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
@@ -108,7 +124,7 @@
                               style="margin-top:10px;">
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right"
-                                > 名称</label>
+                                        > 名称</label>
 
                                 <div class="col-sm-4">
                                     <input type="text"
@@ -116,7 +132,7 @@
                                            ng-model="editItem.name">
                                 </div>
                                 <label class="col-sm-1 control-label no-padding-right"
-                                ></label>
+                                        ></label>
                             </div>
                             <div class="space-4"></div>
                             <div class="form-group">
@@ -134,7 +150,7 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right"
-                                       > 包名</label>
+                                        > 包名</label>
 
                                 <div class="col-sm-4">
                                     <input type="text"
@@ -145,7 +161,18 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right"
-                                       > 推广链接</label>
+                                        > 图标</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text"
+                                           class="col-xs-12"
+                                           ng-model="editItem.icon">
+                                </div>
+                            </div>
+                            <div class="space-4"></div>
+                            <div class="form-group">
+                                <label class="col-sm-1 control-label no-padding-right"
+                                        > 推广链接</label>
 
                                 <div class="col-sm-4">
                                     <input type="text"
@@ -156,7 +183,7 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right"
-                                > 推广数量</label>
+                                        > 推广数量</label>
 
                                 <div class="col-sm-4">
                                     <input type="text"
@@ -167,7 +194,7 @@
                             <div class="space-4"></div>
                             <div class="form-group">
                                 <label class="col-sm-1 control-label no-padding-right"
-                                > 权重</label>
+                                        > 权重</label>
 
                                 <div class="col-sm-4">
                                     <input type="text"

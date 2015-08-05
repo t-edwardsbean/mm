@@ -40,12 +40,13 @@ public class TaskServiceImpl implements TaskService {
         Task task = null;
         for (Task sortedTask : sortedTasks) {
             //不返回已成功的任务,不返回失败的任务
-            if (sortedTask.getId().equals(taskId)  || sortedTask.getId().equals(failId) || doneIds != null && doneIds.contains(sortedTask.getId())) {
+            if (sortedTask.getId().equals(taskId) || sortedTask.getId().equals(failId) || doneIds != null && doneIds.contains(sortedTask.getId())) {
                 continue;
             }
             //无限次任务
             if (sortedTask.getCount() == 0) {
                 task = sortedTask;
+                break;
             }
             TaskHistory taskHistory = taskHistoryRepository.findByTaskIdAndTime(sortedTask.getId(), LocalDate.now().toString());
             //取出权重最高，任务数量未完成的
@@ -55,5 +56,39 @@ public class TaskServiceImpl implements TaskService {
             }
         }
         return task;
+    }
+
+    @Override
+    public Task getV1Task(String taskId, List<String> doneIds, List<String> failId) {
+        //当天该任务计数+1
+        if (taskId != null) {
+            mongoTemplate.upsert(new Query(where("taskId").is(taskId).and("time").is(LocalDate.now().toString())), new Update().inc("count", 1), TaskHistory.class);
+        }
+        //权重最高的新任务,App类型的任务
+        List<Task> tasks = getAllAppTask();
+        List<Task> sortedTasks = tasks.stream().sorted((a, b) -> a.getWeight().compareTo(b.getWeight())).collect(Collectors.toList());
+        Task task = null;
+        for (Task sortedTask : sortedTasks) {
+            //不返回已成功的任务,不返回失败的任务
+            if (sortedTask.getId().equals(taskId) || sortedTask.getId().equals(failId) || doneIds != null && doneIds.contains(sortedTask.getId())) {
+                continue;
+            }
+            //无限次任务
+            if (sortedTask.getCount() == 0) {
+                task = sortedTask;
+                break;
+            }
+            TaskHistory taskHistory = taskHistoryRepository.findByTaskIdAndTime(sortedTask.getId(), LocalDate.now().toString());
+            //取出权重最高，任务数量未完成的
+            if (taskHistory == null || taskHistory.getCount() <= sortedTask.getCount()) {
+                task = sortedTask;
+                break;
+            }
+        }
+        return task;
+    }
+
+    public List<Task> getAllAppTask() {
+        return taskRepository.findAll().stream().filter(task -> task.getType() == null || task.getType().getName().equals("App")).collect(Collectors.toList());
     }
 }

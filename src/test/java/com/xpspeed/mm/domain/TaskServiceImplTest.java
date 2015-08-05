@@ -76,4 +76,16 @@ public class TaskServiceImplTest {
         type.setName("网页");
         typeRepository.save(type);
     }
+
+    @Test
+    public void testGetAllAppTask() throws Exception {
+        List<Task> tasks = taskService.getAllAppTask();
+        System.out.println(tasks);
+    }
+
+    @Test
+    public void testV2() throws Exception {
+        Task task = taskService.getTask(null, Arrays.asList("55a63b52e4b06795716651e1"), null);
+        System.out.println(task);
+    }
 }

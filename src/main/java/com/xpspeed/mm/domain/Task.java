@@ -22,6 +22,8 @@ public class Task {
     @ApiModelProperty("推广链接")
     String url;
 
+    @ApiModelProperty("推广图标,用于生成快捷方式")
+    String icon;
     @DBRef
     @ApiModelProperty("推广类型,0或没有表示app,1表示网页")
     Type type;
@@ -86,15 +88,25 @@ public class Task {
         this.url = url;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
-                "weight=" + weight +
-                ", count=" + count +
-                ", url='" + url + '\'' +
-                ", name='" + name + '\'' +
+                "id='" + id + '\'' +
                 ", packageName='" + packageName + '\'' +
-                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", icon='" + icon + '\'' +
+                ", type=" + type +
+                ", count=" + count +
+                ", weight=" + weight +
                 '}';
     }
 }
